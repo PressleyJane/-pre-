@@ -960,6 +960,68 @@ body::before{
 }
 
 
+/* ==================== 党统领 · 政策托底 ==================== */
+.pol-band{
+  position:relative;margin:0 0 15px;padding:13px 14px 12px;border-radius:16px;
+  background:linear-gradient(160deg,#f5f9ff,#ecf3fe);
+  border:1px solid #d3e4f9;border-left:4px solid var(--red-600);
+  box-shadow:0 6px 16px rgba(13,71,161,.08);
+}
+.pol-tag{
+  display:inline-block;margin-bottom:9px;padding:4px 10px;border-radius:99px;
+  background:linear-gradient(135deg,var(--blue-700),#1e88e5);color:#fff;
+  font-size:10px;font-weight:900;letter-spacing:.16em;
+}
+.pol-row{display:flex;gap:9px;align-items:flex-start;padding:4px 0;}
+.pol-row + .pol-row{border-top:1px dashed #dceafb;}
+.pol-k{
+  flex:0 0 62px;padding-top:2px;font-size:10px;font-weight:900;letter-spacing:.08em;
+  color:var(--blue-700);text-align:right;
+}
+.pol-v{flex:1 1 auto;font-size:12px;line-height:1.7;color:var(--ink-2);}
+.pol-v.hl{color:var(--red-700);font-weight:800;}
+
+/* ==================== 序幕 · 时间刻度 ==================== */
+.imarks{
+  width:100%;max-width:340px;margin:16px 0 4px;padding:13px 14px;border-radius:16px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(160,205,255,.3);
+  text-align:left;position:relative;z-index:2;
+  animation:screenIn .7s .3s var(--ease) both;
+}
+.imarks-cap{
+  font-size:10.5px;font-weight:900;letter-spacing:.2em;color:#ffe9a8;margin-bottom:10px;
+}
+.imark{display:flex;gap:10px;align-items:flex-start;padding:5px 0;}
+.imark + .imark{border-top:1px dashed rgba(160,205,255,.22);}
+.im-yr{
+  flex:0 0 54px;font-size:11px;font-weight:900;color:#7cc0ff;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;padding-top:1px;
+}
+.im-tx{flex:1 1 auto;font-size:11.5px;line-height:1.65;color:rgba(226,240,255,.9);}
+.imarks-quote{
+  margin-top:11px;padding-top:10px;border-top:1px solid rgba(255,214,140,.35);
+  font-size:12px;line-height:1.7;font-weight:800;color:#ffd76e;letter-spacing:.02em;
+}
+
+/* ==================== 结局 · 政策时间轴 ==================== */
+.ptl{
+  text-align:left;border-radius:18px;overflow:hidden;margin:0 0 20px;
+  background:#fff;border:1px solid #e2ecf9;box-shadow:0 10px 26px rgba(13,71,161,.09);
+  animation:plateIn .7s .32s var(--ease) both;
+}
+.ptl-row{
+  display:flex;gap:11px;align-items:flex-start;padding:11px 13px;
+}
+.ptl-row + .ptl-row{border-top:1px dashed #e6eefa;}
+.ptl-yr{
+  flex:0 0 46px;font-size:12px;font-weight:900;color:#fff;text-align:center;
+  padding:3px 0;border-radius:8px;
+  background:linear-gradient(135deg,var(--red-700),var(--red-500));
+  font-variant-numeric:tabular-nums;
+}
+.ptl-tx{flex:1 1 auto;font-size:11.5px;line-height:1.7;color:var(--ink-3);}
+.ptl-tx b{display:block;font-size:12.5px;color:var(--blue-700);font-weight:900;margin-bottom:2px;}
+
 /* ==================== PC 横屏 ==================== */
 @media (min-width:900px){
   body{padding:0;}
@@ -1595,7 +1657,7 @@ const ROUTES = [
     intro:"你花光积蓄盘下这家店。八个决定，决定它能不能活到 2025。",
     nodes:[
     {
-      yr:"2012", place:"商贸城一区", who:"SYSTEM", nm:"穿越者 · 记忆觉醒", face:"me", art:"shop",
+      yr:"2012", place:"商贸城一区", who:"SYSTEM", nm:"穿越者 · 记忆觉醒", face:"me", art:"shop", pol:{d:"习近平同志首次到义乌调研，勉励义乌“要善于总结经验”", m:"“兴商建市”战略二十余年不动摇", y:"你脚下这块地方，本就长在市场里"},
       story:[
         {t:"sys", v:"身份加载：义乌经营户 · 主营圣诞用品 · 存款 ¥3,860"},
         {t:"p", v:"你在报价单上醒来，日历停在 <b>2012 年</b>。货架上的圣诞老人还没拆膜。"},
@@ -1627,7 +1689,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2012", place:"商贸城走廊", who:"GUEST", nm:"中东客户 阿里", face:"guest", art:"port",
+      yr:"2012", place:"商贸城走廊", who:"GUEST", nm:"中东客户 阿里", face:"guest", art:"port", pol:{d:"习近平同志要求全省学习推广“义乌发展经验”，概括“兴商建市、产业联动、城乡统筹、和谐发展、丰厚文化底蕴、力求党政有为”六个方面", m:"把“党政有为”变成市场服务能力", y:"市场之外还有政府这只“有形的手”"},
       story:[
         {t:"p", v:"一个迪拜口音的客户在你摊位前站了很久，翻完样品才开口。"},
         {t:"d", say:"阿里", v:"我要的量是你现在客户的三倍。<b>但价格，得再低两成。</b>"}
@@ -1656,7 +1718,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2018", place:"你的摊位", who:"GUEST", nm:"美国客户 Mike", face:"guest", art:"storm",
+      yr:"2018", place:"你的摊位", who:"GUEST", nm:"美国客户 Mike", face:"guest", art:"storm", pol:{d:"共建“一带一路”倡议", m:"“品牌出海”计划落地 20 多个国家和地区", y:"新兴市场通道被打通，你的“去美国化”才有底气"},
       story:[
         {t:"p", v:"美国挑起贸易战、加征关税。合作最久的老客户推门进来，脸色不太好。"},
         {t:"d", say:"Mike", v:"关税太高，<b>我们一人分担一半</b>，不然这单做不下去。"}
@@ -1685,7 +1747,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2021", place:"你的打样间", who:"SYSTEM", nm:"内卷困局", face:"me", art:"shop",
+      yr:"2021", place:"你的打样间", who:"SYSTEM", nm:"内卷困局", face:"me", art:"shop", pol:{d:"党的十八届三中全会：使市场在资源配置中起决定性作用", m:"尊重群众首创精神，用改革的办法解决发展中的问题", y:"制度保护敢创新的人"},
       story:[
         {t:"p", v:"你卖八块，隔壁七块五；你降到七块五，街对面挂出六块八。<b class='warn'>利润像水一样流走。</b>"},
         {t:"d", say:"你自己", v:"再拼价格，我迟早也会关店走人。<b>得有个别人抄不走的东西。</b>"}
@@ -1715,7 +1777,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2023", place:"你的直播棚", who:"SYSTEM", nm:"数字鸿沟", face:"me", art:"digital",
+      yr:"2023", place:"你的直播棚", who:"SYSTEM", nm:"数字鸿沟", face:"me", art:"digital", pol:{d:"加快发展数字经济，推进“人工智能+”", m:"市场妇联“数智巾帼”英才计划：AI 培训 5 期、覆盖 20 余个行业", y:"技术门槛被党组织替你抬走了一半"},
       story:[
         {t:"p", v:"电商要学，直播要跟，<b>AI 又来了。</b>市场里培训五花八门，有人赚了，有人交了学费什么都得不到。"},
         {t:"d", say:"同行桂海琴", v:"“学了到底有没有用？”<b>我第一批报了名。你也来吧。</b>"}
@@ -1746,7 +1808,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2025", place:"你的 800㎡ 展厅", who:"GUEST", nm:"欧洲客户来电", face:"guest", art:"global",
+      yr:"2025", place:"你的 800㎡ 展厅", who:"GUEST", nm:"欧洲客户来电", face:"guest", art:"global", pol:{d:"“两个毫不动摇”：毫不动摇鼓励、支持、引导非公有制经济发展", m:"商城集团“品牌出海”计划＋义乌海关通关改革", y:"制度确定性对冲外部不确定性"},
       story:[
         {t:"p", v:"展厅从 20 平米扩到 <b>800 平米</b>，产品卖到 <b>60 多个国家</b>。外部环境一变，部分客户突然<b class='warn'>撤单</b>。"},
         {t:"d", say:"电话那头", v:"总部决定暂停这批订单。<b>我们可能要找更便宜的地方了。</b>"}
@@ -1777,7 +1839,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2025 · 春", place:"你的仓库", who:"SYSTEM", nm:"物流时效", face:"me", art:"port",
+      yr:"2025 · 春", place:"你的仓库", who:"SYSTEM", nm:"物流时效", face:"me", art:"port", pol:{d:"习近平同志亲自推动浙江中欧班列（义新欧）开通", m:"26 条“义新欧”班列线路 · 苏溪国际枢纽港 · “即到即查、快速验放”", y:"国家把通道修到了你家门口"},
       story:[
         {t:"p", v:"客户催得越来越急，订单做出来了却卡在运不出去。<b>时效直接决定客户会不会回头。</b>"},
         {t:"d", say:"货代", v:"班列比海运快半个月，<b>但运费贵不少。你选哪个？</b>"}
@@ -1807,7 +1869,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2025 · 冬", place:"商贸城中庭", who:"SYSTEM", nm:"最后的抉择", face:"me", art:"brand",
+      yr:"2025 · 冬", place:"商贸城中庭", who:"SYSTEM", nm:"最后的抉择", face:"me", art:"brand", pol:{d:"习近平同志推动“三个转变”：推动中国制造向中国创造转变、中国速度向中国质量转变、中国产品向中国品牌转变", m:"注册国际商标、“义乌好货”品牌出海集合店", y:"从产品出海到品牌出海，是国家搭的台"},
       story:[
         {t:"p", v:"产品卖到 60 多个国家，但利润的大头仍被品牌方拿走。<b>你赚的是加工费和批零差价。</b>"},
         {t:"d", say:"你的账本", v:"品质不输大牌，<b>可贴上别人的牌子才卖得上价。</b>"}
@@ -1847,7 +1909,7 @@ const ROUTES = [
     intro:"代工养活今天，品牌决定明天。这八个节点，你要替她把名字立起来。",
     nodes:[
     {
-      yr:"2012", place:"商贸城饰品摊位", who:"GUEST", nm:"韩国客户", face:"guest", art:"shop",
+      yr:"2012", place:"商贸城饰品摊位", who:"GUEST", nm:"韩国客户", face:"guest", art:"shop", pol:{d:"习近平同志要求全省学习推广“义乌发展经验”", m:"把“党政有为”变成市场服务能力", y:"市场之外还有政府这只“有形的手”"},
       story:[
         {t:"sys", v:"身份加载：义乌经营户 · 饰品/雨伞代工 · 存款 ¥5,200 · 3 个长期客户"},
         {t:"d", say:"韩国客户", v:"你们品质很好，但——<b>贴上我们的牌子，才能卖出三倍的价格。</b>你们只管生产就好。"}
@@ -1876,7 +1938,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2019", place:"你的小厂", who:"GUEST", nm:"韩国合作方", face:"guest", art:"brand",
+      yr:"2019", place:"你的小厂", who:"GUEST", nm:"韩国合作方", face:"guest", art:"brand", pol:{d:"习近平同志推动“三个转变”：推动中国制造向中国创造转变、中国速度向中国质量转变、中国产品向中国品牌转变", m:"义乌引导企业注册国际商标", y:"名字要立起来，政策先替你占位"},
       story:[
         {t:"p", v:"工厂已有四十多人，饰品和雨伞卖到十几个国家。对方提出合作开店。"},
         {t:"d", say:"韩国合作方", v:"渠道我们搞定，<b>你只需要把产品做好——挂我们的牌子。</b>"}
@@ -1905,7 +1967,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2021", place:"你的成品仓", who:"SYSTEM", nm:"环保门槛", face:"me", art:"shop",
+      yr:"2021", place:"你的成品仓", who:"SYSTEM", nm:"环保门槛", face:"me", art:"shop", pol:{d:"绿水青山就是金山银山", m:"永康“帮扶＋创新”双措并举、源头替代与末端治理", y:"环保从成本变成通行证"},
       story:[
         {t:"p", v:"你的涂装工序被列入整改名单。<b class='warn'>“不改则关停，改则成本难担。”</b>"},
         {t:"d", say:"供应商", v:"水性涂料贵不少，<b>但这是硬门槛。</b>"}
@@ -1937,7 +1999,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2022", place:"你的产线", who:"SYSTEM", nm:"设备与资金", face:"me", art:"digital",
+      yr:"2022", place:"你的产线", who:"SYSTEM", nm:"设备与资金", face:"me", art:"digital", pol:{d:"创新驱动发展战略", m:"修水六大共享平台 · 株洲“小步快跑”数字化转型", y:"大企业建平台，小企业用平台"},
       story:[
         {t:"p", v:"订单规格越来越多，<b>重型设备一台就要上百万。</b>你手里没有这么多现金。"},
         {t:"d", say:"同行", v:"单打独斗，这条路走不通。"}
@@ -1968,7 +2030,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2023", place:"品牌出海发布会", who:"SYSTEM", nm:"品牌出海计划", face:"me", art:"port",
+      yr:"2023", place:"品牌出海发布会", who:"SYSTEM", nm:"品牌出海计划", face:"me", art:"port", pol:{d:"习近平同志亲自推动义乌国际贸易综合改革", m:"2023 年义乌商城集团启动“品牌出海”计划", y:"整店输出：中小商户不必独自承担重资产风险"},
       story:[
         {t:"p", v:"2023 年义乌商城集团启动<b>“品牌出海”计划</b>。会场里挤满握着商标、却不知怎么出海的中小商户。"},
         {t:"d", say:"商城集团", v:"不让商户自己一条船一条船地试——<b>整店输出，把义乌门店直接开到海外。</b>"}
@@ -1998,7 +2060,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2025 · 春", place:"你的工厂", who:"GUEST", nm:"美国客户", face:"guest", art:"storm",
+      yr:"2025 · 春", place:"你的工厂", who:"GUEST", nm:"美国客户", face:"guest", art:"storm", pol:{d:"共建“一带一路”倡议", m:"“现金结账让 2 个点”＋内外贸两手抓", y:"稳外贸稳供应链，企业才有转型空间"},
       story:[
         {t:"p", v:"2025 年 4 月美国宣布<b>“对等关税”</b>，部分商品税率一度达 <b>245%</b>。4—6 月正是出货高峰，<b class='warn'>库存积压、现金流承压</b>。"},
         {t:"d", say:"美国客户", v:"税率已经超过货值了。<b>要不我们一起分担？</b>"}
@@ -2029,7 +2091,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2025 · 夏", place:"你的新品间", who:"SYSTEM", nm:"文化 IP 出海", face:"me", art:"culture",
+      yr:"2025 · 夏", place:"你的新品间", who:"SYSTEM", nm:"文化 IP 出海", face:"me", art:"culture", pol:{d:"推动中华优秀传统文化创造性转化、创新性发展", m:"国风 IP 设计，“每把伞都有故事可讲”", y:"文化出海是国家战略，不是个人情怀"},
       story:[
         {t:"p", v:"仓库里几千款产品，每一款都能生产，<b>每一款都不够特别。</b>"},
         {t:"d", say:"海外客户", v:"报价很便宜，但说实话——<b>你们的产品，看起来和所有人一样。</b>"}
@@ -2060,7 +2122,7 @@ const ROUTES = [
       ]
     },
     {
-      yr:"2025 · 年末", place:"义乌报检中心", who:"SYSTEM", nm:"通关与合规", face:"me", art:"port",
+      yr:"2025 · 年末", place:"义乌报检中心", who:"SYSTEM", nm:"通关与合规", face:"me", art:"port", pol:{d:"习近平同志亲自推动浙江中欧班列（义新欧）开通", m:"26 条“义新欧”班列线路 · 海关通关改革", y:"通关压缩，你的品牌才走得到世界"},
       story:[
         {t:"p", v:"品牌立起来了，新问题来了：组货的化妆品来自<b>全国各地厂家</b>，按老办法要去企业所在地办检验，<b>光备材料就要一周。</b>"},
         {t:"d", say:"同行虞舒静", v:"现在有<b>采购地申报检验改革</b>试点了。你还按老办法跑？"}
@@ -2097,6 +2159,29 @@ const ROUTES = [
 
 /* 故事线封面用的矢量图 */
 const ROUTE_ART = ["storm","brand"];
+
+/* 党统领 · 义乌发展的时间刻度（序幕） */
+const MARKS = [
+  ["2002.12", "习近平同志首次到义乌调研，勉励义乌“要善于总结经验”"],
+  ["2006.04", "要求省委、省政府在全省学习推广“义乌发展经验”"],
+  ["2006.06", "赴义乌横塘村座谈：义乌的发展是“莫名其妙”的发展、“无中生有”的发展、“点石成金”的发展"],
+  ["2011", "国务院批复义乌国际贸易综合改革试点"],
+  ["2023.09", "考察浙江期间再赴义乌，勉励“义乌的小商品、大市场，不断地再造新的辉煌”"]
+];
+const QUOTE2023 = "“义乌的小商品、大市场，不断地再造新的辉煌。”";
+
+/* 党统领 · 政策时间轴（结局） */
+const POLICY_TIMELINE = [
+  { y:"2002", t:"首次调研义乌", d:"勉励“要善于总结经验”" },
+  { y:"2006", t:"学习推广“义乌发展经验”", d:"兴商建市、产业联动、城乡统筹、和谐发展、丰厚文化底蕴、力求党政有为" },
+  { y:"2011", t:"国际贸易综合改革试点", d:"国务院批复，市场采购贸易方式由此破题" },
+  { y:"2013", t:"市场采购贸易方式", d:"小微企业低货值拼柜出口的制度改革" },
+  { y:"2014", t:"浙江中欧班列（义新欧）首发", d:"全国唯一由县级市始发的国际班列" },
+  { y:"2023", t:"品牌出海计划", d:"从产品出海到品牌出海，落地 20 多个国家和地区" },
+  { y:"2024", t:"义乌进出口 6689.3 亿元", d:"市场采购出口占出口总值 80.1%；对共建“一带一路”国家贸易占 61.8%" },
+  { y:"2025", t:"苏溪国际枢纽港开港", d:"“即到即查、快速验放”，通关时间进一步压缩" }
+];
+
 
 /* =====================================================================
    三、游戏状态与工具
@@ -2239,6 +2324,7 @@ function startRoute(route){
     yr:route.time.split(" ")[0],
     title:route.name,
     text:route.intro,
+    marks:MARKS,
     btn:"进入第一个节点"
   }, ()=> renderNode());
 }
@@ -2248,6 +2334,11 @@ function showInter(data, onNext){
     <div class="yr">${data.yr}</div>
     <h3>${data.title}</h3>
     <p>${data.text}</p>
+    ${data.marks ? `<div class="imarks">
+      <div class="imarks-cap">党统领 · 这条路的时间刻度</div>
+      <div class="imarks-list">${data.marks.map(m=>`<div class="imark"><span class="im-yr">${m[0]}</span><span class="im-tx">${m[1]}</span></div>`).join("")}</div>
+      <div class="imarks-quote">${QUOTE2023}</div>
+    </div>` : ""}
     <div class="tap">TAP TO CONTINUE</div>
   `;
   el("btnInterNext").textContent = data.btn || "继续";
@@ -2298,6 +2389,12 @@ function renderNode(){
       <div class="clock">NODE ${state.idx+1}/${nodes.length}<b>${n.yr}</b></div>
     </div>
     ${n.art && SV[n.art] ? `<div class="node-art">${SV[n.art]("n"+state.route.id+state.idx)}</div>` : ""}
+    ${n.pol ? `<div class="pol-band">
+      <div class="pol-tag">🇨🇳 党统领 · 政策托底</div>
+      <div class="pol-row"><span class="pol-k">中央部署</span><span class="pol-v">${n.pol.d}</span></div>
+      <div class="pol-row"><span class="pol-k">义乌举措</span><span class="pol-v">${n.pol.m}</span></div>
+      ${n.pol.y && n.pol.y !== "——" ? `<div class="pol-row"><span class="pol-k">对你的支撑</span><span class="pol-v hl">${n.pol.y}</span></div>` : ""}
+    </div>` : ""}
     <div class="node-body">
       <div class="story">${storyHTML}</div>
       <div class="ask">${n.ask}</div>
@@ -2539,10 +2636,21 @@ function finishWin(){
         </div>
       </div>
 
+      <div class="label-row"><span class="label-dot"></span>党统领 · 政策时间轴</div>
+      <div class="ptl">
+        ${POLICY_TIMELINE.map(x=>`<div class="ptl-row">
+          <span class="ptl-yr">${x.y}</span>
+          <span class="ptl-tx"><b>${x.t}</b>${x.d}</span>
+        </div>`).join("")}
+      </div>
+
       <div class="coda">
         <div class="coda-stars">★★★★★</div>
         <p class="coda-lead">在党的统领下</p>
         <div class="coda-rows">
+          <div class="coda-row"><span class="ck">总纲领</span><span class="cv">“八八战略”指引浙江发生全方位、系统性、深层次精彩蝶变</span></div>
+          <div class="coda-row"><span class="ck">义乌答案</span><span class="cv">“义乌发展经验”，是因地制宜发展县域经济的成功实践</span></div>
+          <div class="coda-row"><span class="ck">政绩观</span><span class="cv">一张蓝图绘到底 · 一任接着一任干</span></div>
           <div class="coda-row"><span class="ck">经济发展</span><span class="cv">平衡性 · 协调性 · 可持续性明显增强</span></div>
           <div class="coda-row"><span class="ck">国家实力</span><span class="cv">经济实力 · 科技实力 · 综合国力跃上新台阶</span></div>
         </div>
