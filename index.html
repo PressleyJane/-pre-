@@ -84,7 +84,7 @@ body::before{
 .phone{
   position:relative;z-index:2;
   width:min(460px,100vw);
-  min-height:100vh;min-height:100dvh;
+  min-height:100vh;min-height:100svh;min-height:100dvh;
   margin:0 auto;
   padding:14px 14px calc(18px + env(safe-area-inset-bottom));
   display:flex;flex-direction:column;
@@ -106,6 +106,7 @@ body::before{
   border-radius:var(--r-md);
   box-shadow:var(--sh-1);
   backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
 }
 .hud-back{
   flex:0 0 auto;width:34px;height:34px;border-radius:11px;border:1px solid var(--line);
@@ -270,6 +271,7 @@ body::before{
   font-weight:900;font-size:15px;color:#fff;
   background:rgba(8,32,64,.55);border:1px solid rgba(255,255,255,.4);
   backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
 }
 .route-time{
   position:absolute;bottom:10px;left:14px;z-index:3;color:#fff;
@@ -604,6 +606,8 @@ body::before{
 .cg-rays{
   position:absolute;left:50%;top:-30%;width:150%;height:150%;
   transform:translateX(-50%);
+  /* 回退：不支持 conic-gradient 的浏览器用径向光晕 */
+  background:radial-gradient(closest-side, rgba(255,236,180,.30), transparent 72%);
   background:conic-gradient(from 0deg at 50% 50%,
     rgba(255,236,180,.34) 0deg 5deg, transparent 5deg 22deg,
     rgba(255,236,180,.26) 22deg 27deg, transparent 27deg 44deg,
@@ -915,6 +919,8 @@ body::before{
 .coda::before{
   content:"";position:absolute;left:50%;top:-60%;width:150%;height:180%;
   transform:translateX(-50%);
+  /* 回退：不支持 conic-gradient 的浏览器用径向光晕 */
+  background:radial-gradient(closest-side, rgba(255,222,150,.16), transparent 70%);
   background:conic-gradient(from 0deg at 50% 50%,
     rgba(255,222,150,.16) 0deg 6deg, transparent 6deg 26deg,
     rgba(255,222,150,.12) 26deg 32deg, transparent 32deg 52deg,
@@ -1021,6 +1027,75 @@ body::before{
 }
 .ptl-tx{flex:1 1 auto;font-size:11.5px;line-height:1.7;color:var(--ink-3);}
 .ptl-tx b{display:block;font-size:12.5px;color:var(--blue-700);font-weight:900;margin-bottom:2px;}
+
+/* ==================== 个性化结算 · 结局卡面 ==================== */
+.settle{
+  display:none;width:min(442px,100%);max-height:92vh;overflow-y:auto;overscroll-behavior:contain;
+  background:#fff;border-radius:26px;box-shadow:0 34px 90px rgba(0,0,0,.55);
+  animation:settleIn .62s var(--ease) both;
+  position:relative;
+}
+@keyframes settleIn{
+  0%{opacity:0;transform:translateY(44px) scale(.92);}
+  60%{opacity:1;transform:translateY(-4px) scale(1.01);}
+  100%{opacity:1;transform:none;}
+}
+.settle-vis{position:relative;height:236px;overflow:hidden;border-radius:26px 26px 0 0;background:#0a2f5c;}
+.settle-vis .cgsvg{display:block;width:100%;height:100%;}
+.settle-vis::after{
+  content:"";position:absolute;inset:auto 0 0 0;height:38%;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,.96));
+}
+.settle-vis::before{
+  content:"";position:absolute;z-index:3;left:0;right:0;top:0;height:4px;
+  background:linear-gradient(90deg,var(--blue-700),var(--red-600),var(--gold-400));
+}
+.settle-body{padding:2px 20px calc(20px + env(safe-area-inset-bottom));text-align:center;position:relative;}
+.settle-kicker{
+  margin-top:14px;font-size:10.5px;font-weight:900;letter-spacing:.24em;color:var(--ink-3);
+}
+.settle-title{
+  margin:9px 0 7px;font-size:31px;font-weight:900;letter-spacing:.14em;line-height:1.25;
+}
+.settle-title.ok{
+  background:linear-gradient(100deg,#0d47a1,#1e88e5 35%,#d98a0b 70%,#ffca28);
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:goldFlow 6s linear infinite;
+}
+.settle-title.no{
+  background:linear-gradient(100deg,#33475f,#5a6f89 45%,#8a2b2b);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.settle-sub{font-size:12.5px;color:var(--ink-3);letter-spacing:.04em;margin-bottom:11px;}
+.settle-sub b{color:var(--red-700);font-weight:900;}
+.settle-bev{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;}
+.bev-chip{
+  font-size:11px;font-weight:800;padding:5px 10px;border-radius:99px;
+  background:linear-gradient(135deg,#eef6ff,#e2eefd);color:var(--blue-700);
+  border:1px solid #cfe3fb;
+}
+.settle-quote{
+  text-align:left;position:relative;padding:15px 16px 16px;border-radius:18px;margin-bottom:15px;
+  background:linear-gradient(170deg,#f8fbff,#eef5ff);border:1px solid #dbe8f8;
+}
+.settle-quote::before{
+  content:"“";position:absolute;top:-8px;left:10px;font-size:52px;color:#cfe1f7;
+  font-family:Georgia,serif;line-height:1;
+}
+.settle-quote .sq-cap{
+  font-size:10.5px;font-weight:900;letter-spacing:.24em;color:var(--red-700);margin-bottom:8px;
+}
+.settle-quote p{margin:0;font-size:13.5px;line-height:1.95;color:var(--ink-2);position:relative;z-index:2;}
+.settle-stat{
+  display:flex;gap:9px;margin-bottom:16px;
+}
+.settle-stat > div{
+  flex:1 1 0;padding:11px 6px;border-radius:15px;
+  background:linear-gradient(180deg,#f6faff,#eef5ff);border:1px solid #dfeafa;
+}
+.settle-stat .ss-v{display:block;font-size:17px;font-weight:900;color:var(--blue-700);font-variant-numeric:tabular-nums;}
+.settle-stat .ss-l{display:block;margin-top:3px;font-size:10px;font-weight:800;color:var(--ink-3);letter-spacing:.08em;}
 
 /* ==================== PC 横屏 ==================== */
 @media (min-width:900px){
@@ -1168,6 +1243,7 @@ body::before{
 
 <!-- ========== 反馈模态框 ========== -->
 <div class="mask" id="mask">
+  <div class="settle" id="settleCard"></div>
   <div class="modal" id="modal">
     <div class="m-top">
       <div class="lv" id="mLevel">抉择反馈</div>
@@ -2517,7 +2593,8 @@ el("mNext").addEventListener("click", ()=>{
   closeModal(()=>{
     state.idx++;
     const nodes = state.route.nodes;
-    if(state.idx >= nodes.length){ finish(); return; }
+    // 全部节点完成 → 先出个性化结算卡面，再进结局
+    if(state.idx >= nodes.length){ showSettle(); return; }
     // 剧情衔接幕
     const next = nodes[state.idx];
     const bridge = bridgeText(state.idx);
@@ -2827,11 +2904,358 @@ function cgLose(){
 }
 
 /* =====================================================================
+   九之二、个性化结算（结局卡面）
+   ---------------------------------------------------------------------
+   按玩家的决策特征，在结局前给出专属卡面：
+     破浪线 → 沉沙折戟 / 借浪行舟
+     造牌线 → 扬旗出海 / 贴牌终老
+   ===================================================================== */
+const OPT_TAGS = {
+  /* ---------- 破浪 · 去美国化 ---------- */
+  1:[["市场"],["保守","单一市场"],["保守","内销"]],
+  2:[["创新","市场"],["保守","让价"],["保守"]],
+  3:[["市场","品牌"],["保守","让价"],["保守","让价"]],
+  4:[["创新","研发"],["创新"],["保守","规模"]],
+  5:[["AI","数字化"],["保守","数字化"],["保守"]],
+  6:[["创新","品牌"],["市场","让价"],["保守","收缩"]],
+  7:[["市场","物流"],["市场","合规"],["保守","物流"]],
+  8:[["品牌"],["保守"],["保守"]],
+  /* ---------- 造牌 · 文化出海 ---------- */
+  9:[["品牌"],["保守","代工"],["保守","代工"]],
+  10:[["品牌"],["保守","代工"],["保守","代工"]],
+  11:[["合规"],["合规"],["保守","合规"]],
+  12:[["经营","共享"],["经营","务实"],["保守","重资产"]],
+  13:[["品牌","借力"],["品牌","行商"],["保守","单干"]],
+  14:[["经营","让价"],["市场"],["保守","硬扛"]],
+  15:[["文化IP","创新"],["市场","创新"],["保守","规模"]],
+  16:[["品牌","合规"],["市场","物流"],["保守","合规"]]
+};
+
+const SCENES = {
+  e1:{
+    bg:["#243349","#3b4a63","#5d6b82"], ground:"#1b2536", groundTop:"#2b3a50",
+    accent:"#ffb46b", dim:"#33415a", mode:"dusk",
+    title:"沉沙折戟", route:"破浪 · 去美国化", ok:false,
+    quote:"关税一轮接一轮，你每一次都选择了最保守的那条路。不投入研发，不开拓新市场，不用AI，只靠传统经验的让利和硬扛。美国客户走了一批又一批，新市场的门你始终没有敲开。仓库里的货越堆越高，账上的钱越来越少。你站在国际商贸城的摊位前，看着隔壁老板娘又签下一单发往中东的货，第一次觉得，这条街好像不再属于你了。"
+  },
+  e2:{
+    bg:["#0a2f5c","#c98b32","#ffe0a3","#fff3d6"], ground:"#c9a066", groundTop:"#e8c58a",
+    accent:"#ffe9a8", dim:"#a9c6e6", mode:"corridor", zh:"品牌出海", ar:"التصدير",
+    title:"借浪行舟", route:"破浪 · 去美国化", ok:true,
+    quote:"原来，美国市场和价格战不是唯一的路。每一次冲击到来时，你选择了那条更难走的路——学AI、改产品、跑展会、换市场。当别人还在等关税政策变化时，你的货已经发往迪拜、内罗毕、圣保罗。美国客户走了，但摊位前的人没有少。你终于明白，浪来了不一定要硬扛，借它的力，也能行船。"
+  },
+  e3:{
+    bg:["#0a4a86","#4fa3dd","#cfd9e8","#ffcf85"], ground:"#e2ae5f", groundTop:"#f6d193",
+    accent:"#ffd76e", dim:"#8fbfe8", mode:"skyline", zh:"义乌 · 品牌出海", ar:"يويى",
+    title:"扬旗出海", route:"造牌 · 文化出海", ok:true,
+    quote:"从“美国客户要什么我就做什么”，到“我知道全球客户需要什么”。这条路你走了整整八年。关税逼你转向，AI逼你学习，价格战逼你做出人无我有的东西。当年和你一起在青岩刘村起步的人，有的走了，有的还在等。而你已经在迪拜的分市场里，挂上了自己的品牌招牌。"
+  },
+  e4:{
+    bg:["#141a24","#232c3a","#3a4557"], ground:"#0f141c", groundTop:"#1c232f",
+    accent:"#c8564e", dim:"#2e3849", mode:"warehouse",
+    title:"贴牌终老", route:"造牌 · 文化出海", ok:false,
+    quote:"你做了二十年贴牌，客户要什么你就做什么。品质不差，交期不误，只是利润有些薄——但好歹安稳。单子做完一个又来一个，品牌的事就一直搁着。直到有一天，你发现隔壁摊位挂上了自己的招牌，老客户绕过你直接去找他。你还在做贴牌，只是贴的牌子越来越小，单子越来越少。"
+  }
+};
+
+/* 「经营画像」标签 → 说明 */
+const TAG_DESC = {
+  "市场":"押注新兴市场","创新":"敢于投研发","研发":"肯下本钱开模","AI":"用AI做经营","数字化":"系统化用工具",
+  "品牌":"坚持自主品牌","保守":"选择稳妥路线","单一市场":"依赖单一市场","内销":"退回内销",
+  "让价":"以让利换订单","规模":"以规模换生存","收缩":"收缩求生",
+  "物流":"打通物流通道","合规":"把合规当竞争力","代工":"留在代工位置","经营":"稳健经营",
+  "共享":"借力共享平台","务实":"小步快跑","重资产":"重资产自建","借力":"借平台出海","行商":"主动走出去",
+  "单干":"单打独斗","硬扛":"硬扛外部冲击","文化IP":"做文化原创","内贸":"内外贸两手抓"
+};
+const TAG_PRIORITY = {
+  "破浪 · 去美国化":["市场","创新","AI","品牌","保守"],
+  "造牌 · 文化出海":["品牌","文化IP","创新","市场","经营","保守"]
+};
+
+function decideEnding(routeId, win){
+  const tally = {};
+  const keys = Object.keys(OPT_TAGS);
+  const base = (state.route.id === "A") ? 0 : 8;
+  state.picks.forEach((p,i)=>{
+    if(!p) return;
+    (OPT_TAGS[keys[base + i]] || []).forEach(t=>{ tally[t] = (tally[t] || 0) + 1; });
+  });
+  const priority = TAG_PRIORITY[state.route.name] || [];
+  let top = priority[0], topN = -1;
+  priority.forEach(t=>{ const v = tally[t] || 0; if(v > topN){ topN = v; top = t; } });
+  const ending = routeId === "A" ? (win ? "e2" : "e1") : (win ? "e3" : "e4");
+  return { ending, top, topN, tally };
+}
+
+/* ---------------- 卡面插图 ---------------- */
+function scHead(sc, uid){
+  return `<defs>
+    <linearGradient id="sky${uid}" x1="0" y1="0" x2="0" y2="1">
+      ${sc.bg.map((c,i)=>`<stop offset="${(i/(sc.bg.length-1)).toFixed(2)}" stop-color="${c}"/>`).join("")}
+    </linearGradient>
+    <linearGradient id="grd${uid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${sc.groundTop}"/><stop offset="1" stop-color="${sc.ground}"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#sky${uid})"/>`;
+}
+function scPerson(cx, by, s, coat, pose, skin){
+  skin = skin || "#ffd9b8";
+  const G = `<g transform="translate(${cx},${by}) scale(${s})">
+    <rect x="-16" y="-84" width="10" height="66" rx="4" fill="#12233a"/>
+    <rect x="6" y="-84" width="10" height="66" rx="4" fill="#12233a"/>
+    <path d="M-22 -156 q22 -14 44 0 v76 q-22 8 -44 0 z" fill="${coat}"/>
+    <path d="M-22 -156 q22 -14 44 0 v18 q-22 8 -44 0 z" fill="rgba(255,255,255,.16)"/>
+    <circle cx="0" cy="-172" r="15" fill="${skin}"/>`;
+  const hair = `<path d="M-15 -174 q15 -19 30 0 q-6 -10 -15 -10 t-15 10z" fill="#2b1b12"/>`;
+  let arms = "";
+  if(pose === "back"){
+    arms = `<path d="M-20 -150 L-28 -112" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>
+            <path d="M20 -150 L28 -112" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>`;
+  }else if(pose === "side"){
+    arms = `<path d="M-20 -150 L-30 -118" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>
+            <path d="M20 -150 L30 -126" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>`;
+  }else if(pose === "sit"){
+    arms = `<path d="M-18 -150 L-14 -116" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>
+            <path d="M18 -150 L26 -120" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>`;
+  }else{ /* arms 抬起 */
+    arms = `<path d="M-20 -152 L-34 -186" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>
+            <path d="M20 -152 L34 -186" stroke="${coat}" stroke-width="11" stroke-linecap="round"/>`;
+  }
+  return G + hair + arms + `</g>`;
+}
+function scCrate(x, y, w, h, c, edge, uid, text){
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${c}" stroke="${edge}" stroke-width="1.6"/>
+    <path d="M${x+4} ${y+h/2} H${x+w-4}" stroke="${edge}" stroke-width="1.2" opacity=".7"/>
+    ${text?`<text x="${x+w/2}" y="${y+h/2+5}" font-size="9" font-weight="bold" fill="#fff" fill-opacity=".85" text-anchor="middle" font-family="sans-serif">${text}</text>`:""}
+    <text x="${x-2}" y="${y-4}" font-size="1" fill="none">${uid}</text>`;
+}
+function cgScene(id){
+  const sc = SCENES[id];
+  const uid = id + "z";
+  let s = `<svg class="cgsvg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${scHead(sc, uid)}`;
+
+  if(sc.mode === "dusk"){
+    /* 黄昏商贸城走廊：卷帘门半拉 */
+    s += `<rect x="0" y="22" width="400" height="16" fill="#1b2536"/>`;
+    s += `<g>`;
+    for(let i=0;i<4;i++){
+      const x = 10 + i*98;
+      s += `<rect x="${x}" y="64" width="84" height="112" rx="4" fill="#22304a" stroke="${sc.dim}" stroke-width="1.4"/>
+        <rect x="${x+8}" y="74" width="68" height="66" rx="3" fill="#2d3d59"/>
+        <g fill="#2b3a50">`;
+      for(let k=0;k<4;k++) s += `<rect x="${x+8}" y="${118+k*12}" width="68" height="8"/>`;
+      s += `</g>
+      </g>`;
+    }
+    s += `</g>`;
+    /* 主角冷清一侧 */
+    s += `<rect x="0" y="176" width="400" height="64" fill="url(#grd${uid})"/>`;
+    s += `<g>`;
+    s += scPerson(96, 186, .92, "#3a4a63", "back");
+    s += `<g transform="translate(84,150) rotate(-8)">
+      <rect x="0" y="0" width="26" height="34" rx="2" fill="#e9eef7" stroke="#b9c6d8"/>
+      <g stroke="#b9c6d8" stroke-width="1"><path d="M4 8 H22 M4 14 H22 M4 20 H18 M4 26 H20"/></g>
+      <rect x="0" y="0" width="26" height="34" rx="2" fill="none" stroke="#cf1a22" stroke-width="1.2" stroke-dasharray="3 2"/>
+    </g>`;
+    s += `</g>`;
+    /* 远处温暖的光 + 打包中的商户 */
+    s += `<g opacity=".92">
+      <ellipse cx="330" cy="150" rx="72" ry="44" fill="${sc.accent}" opacity=".18"/>
+      ${scCrate(302,150,32,22,"#a8763a","#ffcf8a",uid)}
+      ${scCrate(338,152,30,20,"#2f7048","#8fe0b0",uid)}
+      <g>
+        <circle cx="284" cy="140" r="8" fill="#4a3a2e"/>
+        <path d="M272 176 q12 -30 24 0 z" fill="#5c4a38"/>
+      </g>
+    </g>`;
+    s += `<rect x="316" y="150" width="20" height="4" rx="2" fill="#ffcf8a" opacity=".7"/>`;
+  }
+
+  else if(sc.mode === "corridor"){
+    /* 品牌出海集合店 + 装车 */
+    s += `<rect x="0" y="26" width="400" height="20" fill="#0a2f5c" opacity=".85"/>`;
+    s += `<g>
+      <rect x="6" y="52" width="188" height="126" rx="5" fill="#cf1a22"/>
+      <rect x="12" y="60" width="176" height="26" rx="3" fill="#a80d15"/>
+      <text x="100" y="79" font-size="15" font-weight="bold" fill="#ffe9a8" text-anchor="middle" font-family="sans-serif">${sc.zh}</text>
+      <rect x="12" y="94" width="176" height="82" rx="3" fill="#fff6e2" opacity=".92"/>
+      <g stroke="#d9b87a" stroke-width="1.2" fill="none">
+        <path d="M12 120 H188 M12 146 H188 M70 94 V176 M130 94 V176"/>
+      </g>
+      <text x="100" y="172" font-size="11" font-weight="bold" fill="#8a5600" text-anchor="middle" font-family="sans-serif">${sc.ar}</text>
+    </g>`;
+    /* 走廊纵深 + 人流 */
+    s += `<g opacity=".55">
+      <rect x="196" y="46" width="204" height="132" fill="#0d3a6b"/>
+      <g fill="#7cc0ff" opacity=".22">
+        <path d="M196 46 H400 V66 H196z M196 92 H400 V100 H196z"/>
+      </g>
+    </g>`;
+    s += `<g opacity=".8">
+      ${[[248,118,"#2b3a50"],[292,124,"#3a4a63"],[338,120,"#2f4a3a"],[372,128,"#4a3a50"]].map(o=>
+        `<g><circle cx="${o[0]}" cy="${o[1]-26}" r="7" fill="#c9a37e"/><path d="M${o[0]-10} ${o[1]} q10 -26 20 0 z" fill="${o[2]}"/></g>`).join("")}
+    </g>`;
+    s += `<rect x="0" y="178" width="400" height="62" fill="url(#grd${uid})"/>`;
+    /* 装车的货箱：阿拉伯文 / 英文 */
+    s += `<g>
+      ${scCrate(232,150,58,28,"#8a6a1f","#ffd76e",uid,"التصدير")}
+      ${scCrate(296,154,54,24,"#1f4f8a","#7cc0ff",uid,"YIWU")}
+      ${scCrate(262,124,52,26,"#8a2b2b","#ff8a80",uid)}
+    </g>`;
+    s += `<g transform="translate(264,176)"><rect x="0" y="0" width="86" height="26" rx="6" fill="#33414f" stroke="#7cc0ff" stroke-width="1.4"/>
+      <circle cx="16" cy="26" r="7" fill="#12233a" stroke="#7cc0ff" stroke-width="1.6"/>
+      <circle cx="70" cy="26" r="7" fill="#12233a" stroke="#7cc0ff" stroke-width="1.6"/></g>`;
+    s += scPerson(132, 190, 1.0, "#1e4a86", "side");
+    /* 晨光 */
+    s += `<path d="M0 0 L400 0 L400 90 L0 210 Z" fill="${sc.accent}" opacity=".10"/>`;
+    s += `<ellipse cx="330" cy="70" rx="90" ry="60" fill="${sc.accent}" opacity=".18"/>`;
+  }
+
+  else if(sc.mode === "skyline"){
+    /* 迪拜天际线 */
+    s += `<circle cx="326" cy="52" r="26" fill="#fff6d6" opacity=".9"/>`;
+    s += `<circle cx="326" cy="52" r="44" fill="#fff6d6" opacity=".16"/>`;
+    s += `<g fill="#2e6ea8" opacity=".55">`;
+    [[24,96],[52,72],[80,108],[110,84]].forEach(b=> s += `<rect x="${b[0]}" y="${b[1]}" width="20" height="${186-b[1]}" rx="2"/>`);
+    s += `</g>`;
+    /* 哈利法塔剪影 */
+    s += `<g fill="#1e5a92" opacity=".7">
+      <path d="M150 186 L150 60 L158 22 L166 60 L166 186 Z"/>
+      <path d="M176 186 L176 96 L184 74 L192 96 L192 186 Z"/>
+      <path d="M202 186 L202 110 L210 92 L218 110 L218 186 Z"/>
+      <path d="M228 186 L228 78 L236 52 L244 78 L244 186 Z"/>
+      <path d="M254 186 L254 120 L262 104 L270 120 L270 186 Z"/>
+    </g>`;
+    s += `<rect x="0" y="182" width="400" height="58" fill="url(#grd${uid})"/>`;
+    /* 店铺：中文 + 阿拉伯文招牌 */
+    s += `<g>
+      <rect x="18" y="66" width="122" height="118" rx="4" fill="#f6ead2" stroke="#c99a4e" stroke-width="2"/>
+      <rect x="18" y="66" width="122" height="30" rx="4" fill="#cf1a22"/>
+      <text x="79" y="82" font-size="10" font-weight="bold" fill="#ffe9a8" text-anchor="middle" font-family="sans-serif">${sc.zh}</text>
+      <text x="79" y="92" font-size="8" fill="#ffd9b8" text-anchor="middle" font-family="sans-serif">${sc.ar}</text>
+      <rect x="28" y="104" width="102" height="70" rx="3" fill="#fffaf0"/>
+      <g stroke="#e0c79a" stroke-width="1.2"><path d="M28 128 H130 M28 152 H130 M62 104 V174 M96 104 V174"/></g>
+      <g fill="#1e4a86" opacity=".55">
+        <circle cx="46" cy="116" r="5"/><circle cx="80" cy="116" r="5"/><circle cx="114" cy="116" r="5"/>
+      </g>
+      <g transform="translate(24,44)"><rect x="0" y="0" width="110" height="20" rx="5" fill="#0d3a6b"/>
+        <text x="55" y="14" font-size="9" font-weight="bold" fill="#7cc0ff" text-anchor="middle" font-family="sans-serif">OWN BRAND · 自主品牌</text></g>
+    </g>`;
+    s += scPerson(196, 188, 1.04, "#1b3f6e", "up", "#e8c9a8");
+    /* 自有品牌货架 */
+    s += `<g opacity=".9">
+      <rect x="238" y="120" width="146" height="66" rx="4" fill="#f0e2c8" stroke="#c99a4e" stroke-width="1.6"/>
+      <g stroke="#d8bd90" stroke-width="1.2"><path d="M238 142 H384 M238 164 H384"/></g>
+      <g fill="#cf1a22" opacity=".8">
+        <rect x="250" y="126" width="16" height="16" rx="3"/><rect x="286" y="126" width="16" height="16" rx="3"/>
+        <rect x="322" y="126" width="16" height="16" rx="3"/><rect x="358" y="126" width="16" height="16" rx="3"/>
+        <rect x="268" y="148" width="16" height="16" rx="3"/><rect x="304" y="148" width="16" height="16" rx="3"/>
+        <rect x="340" y="148" width="16" height="16" rx="3"/>
+      </g>
+    </g>`;
+    s += `<path d="M0 0 L400 0 L400 120 L0 220 Z" fill="#ffe9a8" opacity=".12"/>`;
+  }
+
+  else{ /* warehouse */
+    s += `<rect x="0" y="20" width="400" height="14" fill="#1a212c"/>`;
+    s += `<g stroke="#2b3543" stroke-width="2" fill="none">
+      <path d="M40 34 V186 M130 34 V186 M220 34 V186 M310 34 V186"/><path d="M0 70 H400 M0 120 H400"/>
+    </g>`;
+    s += `<rect x="0" y="180" width="400" height="60" fill="url(#grd${uid})"/>`;
+    /* 无标纸箱堆 */
+    s += `<g>`;
+    [[24,150,58,30],[88,150,58,30],[152,150,58,30],[24,118,58,30],[88,118,58,30],[152,118,58,30],[56,86,58,30],[120,86,58,30]].forEach(b=>
+      s += scCrate(b[0],b[1],b[2],b[3],"#7a6a58","#a89880",uid));
+    s += `</g>`;
+    s += `<g opacity=".85">
+      <rect x="236" y="96" width="140" height="82" rx="4" fill="#20293a" stroke="#3a4557" stroke-width="1.6"/>
+      <g stroke="#2f3a4d" stroke-width="1.2"><path d="M236 118 H376 M236 142 H376 M236 166 H376"/></g>
+      <rect x="250" y="106" width="34" height="8" rx="3" fill="#4a5468"/>
+      <rect x="300" y="130" width="42" height="8" rx="3" fill="#4a5468"/>
+    </g>`;
+    s += scPerson(176, 190, 1.02, "#2f3a4d", "sit", "#e0c2a4");
+    /* 订单上的红字 */
+    s += `<g transform="translate(150,140) rotate(-6)">
+      <rect x="0" y="0" width="62" height="44" rx="3" fill="#eef2f8"/>
+      <g stroke="#b9c6d8" stroke-width="1.2"><path d="M6 10 H56 M6 18 H56 M6 26 H44"/></g>
+      <text x="31" y="39" font-size="9" font-weight="bold" fill="#cf1a22" text-anchor="middle" font-family="sans-serif">待签约</text>
+    </g>`;
+    s += `<g transform="translate(206,150) rotate(24)"><rect x="0" y="0" width="34" height="4" rx="2" fill="#3a4557"/></g>`;
+    /* 窗外霓虹 */
+    s += `<g opacity=".75">
+      <circle cx="330" cy="52" r="16" fill="#ff8a80" opacity=".35"/>
+      <circle cx="368" cy="66" r="12" fill="#7cc0ff" opacity=".3"/>
+      <rect x="300" y="34" width="72" height="5" rx="2" fill="#ff8a80" opacity=".5"/>
+    </g>`;
+  }
+
+  s += `</svg>`;
+  return s;
+}
+
+/* ---------------- 结算界面 ---------------- */
+function showSettle(){
+  const win = state.xp >= MAX_SCORE;
+  const d = decideEnding(state.route.id, win);
+  const sc = SCENES[d.ending];
+  const total = state.route.nodes.length;
+  const bests = state.picks.filter(p=>p && p.mood==="best").length;
+
+  /* 行为画像：取前 4 个特征 */
+  const rows = Object.keys(d.tally)
+    .filter(t=>!["保守","单一市场","内销","让价","规模","收缩","代工","硬扛","单干","重资产"].includes(t))
+    .sort((a,b)=> d.tally[b]-d.tally[a])
+    .slice(0,4);
+  const bev = rows.length ? rows : ["保守"];
+  const topDesc = TAG_DESC[d.top] || d.top;
+
+  el("settleCard").innerHTML = `
+    <div class="settle-vis">${cgScene(d.ending)}</div>
+    <div class="settle-body">
+      <div class="settle-kicker">${sc.route} · 第 ${total} 个决定之后</div>
+      <div class="settle-title ${sc.ok?"ok":"no"}">${sc.title}</div>
+      <div class="settle-sub">你的经营画像 · <b>${topDesc}</b></div>
+      <div class="settle-bev">
+        ${bev.map(t=>`<span class="bev-chip">${t}${d.tally[t]>1?` ×${d.tally[t]}`:""}</span>`).join("")}
+      </div>
+      <div class="settle-quote">
+        <div class="sq-cap">这一次，你的结局</div>
+        <p>${sc.quote}</p>
+      </div>
+      <div class="settle-stat">
+        <div><span class="ss-v">${state.xp}</span><span class="ss-l">商业经验</span></div>
+        <div><span class="ss-v">${bests}/${total}</span><span class="ss-l">最优抉择</span></div>
+        <div><span class="ss-v">${win?"达标":"未达标"}</span><span class="ss-l">评审结果</span></div>
+      </div>
+      <button class="btn ${sc.ok?"":"red"}" id="btnSettleNext">${win?"前往表彰大会 →":"查看经营复盘 →"}</button>
+    </div>
+  `;
+  el("modal").style.display = "none";
+  el("settleCard").style.display = "";
+  el("mask").classList.add("on");
+  document.body.style.overflow = "hidden";
+
+  el("btnSettleNext").addEventListener("click", ()=>{
+    el("mask").classList.remove("on");
+    el("settleCard").style.display = "none";
+    el("modal").style.display = "";
+    document.body.style.overflow = "";
+    finish();
+  });
+}
+
+/* =====================================================================
    十、键盘操作（桌面：1/2/3 选择，Enter 继续）
    ===================================================================== */
 document.addEventListener("keydown", e=>{
   if(el("mask").classList.contains("on")){
-    if(e.key==="Enter" || e.key===" "){ e.preventDefault(); el("mNext").click(); }
+    if(e.key==="Enter" || e.key===" "){
+      e.preventDefault();
+      const s = el("settleCard");
+      if(s && s.style.display !== "none") el("btnSettleNext").click();
+      else el("mNext").click();
+    }
     return;
   }
   if(screens.story.classList.contains("on") && !state.locked){
