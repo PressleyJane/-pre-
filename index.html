@@ -1028,6 +1028,12 @@ body::before{
 .ptl-tx{flex:1 1 auto;font-size:11.5px;line-height:1.7;color:var(--ink-3);}
 .ptl-tx b{display:block;font-size:12.5px;color:var(--blue-700);font-weight:900;margin-bottom:2px;}
 
+/* 结算界面与反馈弹窗互斥：显式类控制，避免 inline style 与样式表默认值冲突 */
+.modal{display:none;}
+.mask > .modal.hidden{display:none !important;}
+.mask.on > .modal:not(.hidden){display:block !important;}
+.mask > .settle.show{display:block !important;}
+
 /* ==================== 个性化结算 · 结局卡面 ==================== */
 .settle{
   display:none;width:min(442px,100%);max-height:92vh;overflow-y:auto;overscroll-behavior:contain;
@@ -3231,15 +3237,15 @@ function showSettle(){
       <button class="btn ${sc.ok?"":"red"}" id="btnSettleNext">${win?"前往表彰大会 →":"查看经营复盘 →"}</button>
     </div>
   `;
-  el("modal").style.display = "none";
-  el("settleCard").style.display = "";
+  el("modal").classList.add("hidden");
+  el("settleCard").classList.add("show");
   el("mask").classList.add("on");
   document.body.style.overflow = "hidden";
 
   el("btnSettleNext").addEventListener("click", ()=>{
     el("mask").classList.remove("on");
-    el("settleCard").style.display = "none";
-    el("modal").style.display = "";
+    el("settleCard").classList.remove("show");
+    el("modal").classList.remove("hidden");
     document.body.style.overflow = "";
     finish();
   });
@@ -3253,7 +3259,7 @@ document.addEventListener("keydown", e=>{
     if(e.key==="Enter" || e.key===" "){
       e.preventDefault();
       const s = el("settleCard");
-      if(s && s.style.display !== "none") el("btnSettleNext").click();
+      if(s && s.classList.contains("show")) el("btnSettleNext").click();
       else el("mNext").click();
     }
     return;
